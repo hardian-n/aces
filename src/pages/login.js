@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import styles from '../../styles/Home.module.css'
+import styles from '../styles/Home.module.css'
 
 export default function Home() {
   return (
@@ -11,11 +11,11 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.alt_title}>
-          Your <span className={styles.blue}>Projects</span>
+          <span className={styles.blue}>Login</span>
         </h1>
 
         <p className={styles.description}>
-        Projects | Clients | Contracts | Users | Settings
+          How it works | Pricing | Docs | Login | Sign up
         </p>
         <p className={styles.pageinfo}>
           Provide your valuable clients with delighful assessments.

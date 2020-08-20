@@ -15,7 +15,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          How it works | Pricing | Docs | Login | Sign up
+        Projects | Clients | Contracts | Users | Settings
         </p>
         <p className={styles.pageinfo}>
           Provide your valuable clients with delighful assessments.
