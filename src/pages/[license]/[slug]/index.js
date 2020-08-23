@@ -1,11 +1,8 @@
 import Head from 'next/head'
-import { useState } from 'react'
 import DefaultErrorPage from 'next/error'
-import { useRouter } from 'next/router'
 import withSession from '../../../lib/session'
 import useUser from '../../../lib/useUser'
 import DashboardLayout from '../../../components/DashboardLayout'
-import DashboardNav from '../../../components/DashboardNav'
 import styles from '../../../styles/aces.module.css'
 
 // export const getStaticProps = withSession(async function({req, res}) {
@@ -20,7 +17,7 @@ export const getServerSideProps = withSession(async function({req, res}) {
   }
 
   const path = req.url.substr(1).split("/")[1]
-  const url = process.env.ACES_API_BASE_URL + `/projects/${path}`
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/projects/${path}`
   const rsp = await fetch(url, {
     method: 'GET',
     headers: {

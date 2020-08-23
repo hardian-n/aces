@@ -8,7 +8,6 @@ import DefaultErrorPage from 'next/error'
 import withSession from '../../lib/session'
 import useUser from '../../lib/useUser'
 import DashboardLayout from '../../components/DashboardLayout'
-import DashboardNav from '../../components/DashboardNav'
 import styles from '../../styles/aces.module.css'
 
 const Projects = ({ projects }) => {
@@ -55,7 +54,7 @@ export const getServerSideProps = withSession(async function({req, res}) {
     }
   }
 
-  const url = process.env.ACES_API_BASE_URL + "/projects"
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + "/projects"
   const rsp = await fetch(url, {
     method: 'GET',
     headers: {

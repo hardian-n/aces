@@ -1,8 +1,6 @@
-import Head from 'next/head'
 import useUser from '../../../lib/useUser'
 import withSession from '../../../lib/session'
 import DashboardLayout from '../../../components/DashboardLayout'
-import DashboardNav from '../../../components/DashboardNav'
 import styles from '../../../styles/aces.module.css'
 
 export const getServerSideProps = withSession(async function({req, res}) {
@@ -13,7 +11,7 @@ export const getServerSideProps = withSession(async function({req, res}) {
     }
   }
 
-  const url = process.env.ACES_API_BASE_URL + `/clients/${user.license}`
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/clients/${user.license}`
   const rsp = await fetch(url, {
     method: 'GET',
     headers: {

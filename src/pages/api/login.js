@@ -3,7 +3,7 @@ import withSession from '../../lib/session'
 
 export default withSession(async (req, res) => {
   const { formBody } = await req.body
-  const url = process.env.ACES_API_BASE_URL + '/token'
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + '/token'
   console.log("/api/login")
   console.log(url)
 
