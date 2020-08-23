@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "SECRET_COOKIE_PASSWORD=2gyZ3GDw3LHZQKDhPmPDL3sjREVRXPr8 next dev",
-    "build": "next build",
+    "build": "SECRET_COOKIE_PASSWORD=2gyZ3GDw3LHZQKDhPmPDL3sjREVRXPr8 next build",
     "start": "SECRET_COOKIE_PASSWORD=2gyZ3GDw3LHZQKDhPmPDL3sjREVRXPr8 next start"
   },
   "dependencies": {
