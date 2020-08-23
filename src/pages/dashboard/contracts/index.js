@@ -13,7 +13,7 @@ export const getServerSideProps = withSession(async function({req, res}) {
     }
   }
 
-  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/contracts/${user.license}`
+  const url = 'https://aces-api-dev.herokuapp.com/v1' + `/contracts/${user.license}`
   const rsp = await fetch(url, {
     method: 'GET',
     headers: {

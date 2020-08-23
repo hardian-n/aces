@@ -3,9 +3,7 @@ import withSession from '../../lib/session'
 
 export default withSession(async (req, res) => {
   const { formBody } = await req.body
-  const url = process.env.NEXT_PUBLIC_BASE_API_URL + '/token'
-  console.log("/api/login")
-  console.log(url)
+  const url = 'https://aces-api-dev.herokuapp.com/v1/token'
 
   try {
     const response = await fetchJson(url, {
