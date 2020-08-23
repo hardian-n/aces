@@ -1,37 +1,46 @@
 import Head from 'next/head'
-import styles from '../../../styles/Home.module.css'
+import useUser from '../../../lib/useUser'
+import withSession from '../../../lib/session'
+import DashboardLayout from '../../../components/DashboardLayout'
+import DashboardNav from '../../../components/DashboardNav'
+import styles from '../../../styles/aces.module.css'
 
-export default function Home() {
+export const getServerSideProps = withSession(async function({req, res}) {
+  const user = req.session.get("user")
+  if (!user || user.isLoggedIn === false) {
+    return {
+      props: { clients: false }
+    }
+  }
+
+  const url = process.env.ACES_API_BASE_URL + `/clients/${user.license}`
+  const rsp = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + user.token,
+    }
+  })
+  const clients = await rsp.json()
+  return {
+    props: { clients }
+  }
+})
+
+const Clients = ({ clients }) => {
+  const { user } = useUser({ redirectTo: '/login' })
+  if (!user || user.isLoggedIn === false) {
+    return <div></div>
+  }
+
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>ACES: Provide your clients with delihtful services</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <DashboardLayout user={user} title="Your Clients" black="Your" blue="Clients">
 
-      <main className={styles.main}>
-        <h1 className={styles.alt_title}>
-          Your <span className={styles.blue}>Clients</span>
-        </h1>
+      <pre className={styles.pre}>{JSON.stringify(clients, null, 2)}</pre>
 
-        <p className={styles.description}>
-        Projects | Clients | Contracts | Users | Settings
-        </p>
-        <p className={styles.pageinfo}>
-          Provide your valuable clients with delighful assessments.
-        </p>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+    </DashboardLayout>
   )
 }
+
+export default Clients
