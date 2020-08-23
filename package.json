@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "SECRET_COOKIE_PASSWORD=2gyZ3GDw3LHZQKDhPmPDL3sjREVRXPr8 next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "SECRET_COOKIE_PASSWORD=2gyZ3GDw3LHZQKDhPmPDL3sjREVRXPr8 next start"
   },
   "dependencies": {
     "next": "9.5.2",
