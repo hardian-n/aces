@@ -3,6 +3,7 @@ import { withIronSession } from 'next-iron-session'
 
 export default function withSession(handler) {
   console.log(process.env.COOKIE_PASSWORD)
+  console.log(process.env.COOKIE_NAME)
   return withIronSession(handler, {
     password: process.env.COOKIE_PASSWORD,
     cookieName: process.env.COOKIE_NAME,
@@ -10,7 +11,7 @@ export default function withSession(handler) {
       // the next line allows to use the session in non-https environments like
       // Next.js dev mode (http://localhost:3000)
       secure: process.env.NODE_ENV === 'production' ? true : false,
-      maxAge: 86400,
+      maxAge: process.env.SESSION_MAX_AGE,
     },
   })
 }
