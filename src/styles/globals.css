@@ -14,3 +14,8 @@ a {
 * {
   box-sizing: border-box;
 }
+
+input {
+  color: #ff6600;
+  padding: 3px 6px;
+}

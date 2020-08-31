@@ -1,37 +1,37 @@
+// [license]/index.js
+
+// https://github.com/vercel/next.js/discussions/10960
+
 import Head from 'next/head'
-import styles from '../../styles/Home.module.css'
+import Link from 'next/link'
+import DefaultErrorPage from 'next/error'
+import useUser from '../../lib/useUser'
+import DashboardLayout from '../../components/DashboardLayout'
+import Projects from "../../components/Projects";
+import styles from '../../styles/aces.module.css'
 
-export default function Home() {
+const ProjectsPage = () => {
+  const { user } = useUser({ redirectTo: '/login' })
+
+  // This includes setting the noindex header because static files
+  // always return a status 200 but the rendered not found page should
+  // obviously not be indexed
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <div>
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+        <DefaultErrorPage statusCode={404} />
+      </div>
+    )
+  }
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>ACES: Provide your clients with delihtful services</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.alt_title}>
-          Your <span className={styles.blue}>Dashboard</span>
-        </h1>
-
-        <p className={styles.description}>
-          How it works | Pricing | Docs | Login | Sign up
-        </p>
-        <p className={styles.pageinfo}>
-          Provide your valuable clients with delighful assessments.
-        </p>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+    <DashboardLayout user={user} title="Your Projects" black="Your" blue="Projects">
+      <Projects user={user} />
+    </DashboardLayout>
   )
 }
+
+export default ProjectsPage
