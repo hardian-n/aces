@@ -6,12 +6,12 @@ export default function withSession(handler) {
   console.log(process.env.COOKIE_NAME)
   return withIronSession(handler, {
     password: process.env.COOKIE_PASSWORD,
-    cookieName: process.env.COOKIE_NAME,
+    cookieName: "gaia/aces-iron/y2020",
     cookieOptions: {
       // the next line allows to use the session in non-https environments like
       // Next.js dev mode (http://localhost:3000)
       secure: process.env.NODE_ENV === 'production' ? true : false,
-      maxAge: process.env.SESSION_MAX_AGE,
+      maxAge: 86400,
     },
   })
 }
