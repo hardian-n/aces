@@ -1,3 +1,4 @@
+/* fetchJson.js */
 export default async function fetcher(...args) {
   try {
     const response = await fetch(...args)
