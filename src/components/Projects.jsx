@@ -19,7 +19,7 @@ const Projects = ({ user }) => {
       {projects.map((project) => (
         <div key={project._id}>
           <h3 className="font-normal">
-            <Link href={`/[license]/[_project_]`} as={`/${project.license}/${project._id}`}>
+            <Link href={`/[license]/[projectId]`} as={`/${project.license}/${project._id}`}>
               <a className="abc">{project.title}</a>
             </Link>
           </h3>

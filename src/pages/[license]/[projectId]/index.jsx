@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 const ProjectPage = () => {
   const { user } = useUser({ redirectTo: '/login' })
   const router = useRouter()
-  const { _project_ } = router.query
+  const { projectId } = router.query
 
   // This includes setting the noindex header because static files
   // always return a status 200 but the rendered not found page should
@@ -30,7 +30,7 @@ const ProjectPage = () => {
 
   return (
     <DashboardLayout user={user} title="Your Projects" black="Your" blue="Projects">
-      <Project user={user} id={_project_} />
+      <Project user={user} id={projectId} />
     </DashboardLayout>
   )
 }
