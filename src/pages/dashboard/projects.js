@@ -6,7 +6,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import DefaultErrorPage from 'next/error'
 import useUser from '../../lib/useUser'
-import DashboardLayout from '../../components/DashboardLayout'
+import Layout from 'components/layout/dashboard'
+import DashboardHeader from 'components/heading/projects'
 import Projects from "../../components/Projects";
 
 const ProjectsPage = () => {
@@ -27,9 +28,12 @@ const ProjectsPage = () => {
   }
 
   return (
-    <DashboardLayout user={user} title="Your Projects" black="Your" blue="Projects">
-      <Projects user={user} />
-    </DashboardLayout>
+    <Layout user={user} title="Your Projects" black="Your" blue="Projects">
+      <DashboardHeader />
+      <div className="container max-w-5xl mx-auto px-6 py-6">
+        <Projects user={user} />
+      </div>
+    </Layout>
   )
 }
 

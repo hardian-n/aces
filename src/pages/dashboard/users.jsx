@@ -1,11 +1,12 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import DefaultErrorPage from 'next/error'
-import useUser from '../../../lib/useUser'
+import useUser from 'lib/useUser'
 import Layout from 'components/layout/dashboard'
-import DashboardHeader from 'components/heading/clients'
-import Clients from "../../../components/Clients";
+import DashboardHeader from 'components/heading/users'
+import Projects from "components/Projects";
 
-const ClientsPage = () => {
+const ProjectsPage = () => {
   const { user } = useUser({ redirectTo: '/login' })
 
   // This includes setting the noindex header because static files
@@ -23,13 +24,13 @@ const ClientsPage = () => {
   }
 
   return (
-    <Layout user={user} title="Your Clients" black="Your" blue="Clients">
+    <Layout user={user} title="Your Projects" black="Your" blue="Projects">
       <DashboardHeader />
       <div className="container max-w-5xl mx-auto px-6 py-6">
-        <Clients user={user} />
+        <Projects user={user} />
       </div>
     </Layout>
   )
 }
 
-export default ClientsPage
+export default ProjectsPage

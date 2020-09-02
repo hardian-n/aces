@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import useUser from '../lib/useUser'
-import Form from '../components/Form'
+import Form from '../components/login-form'
 import fetchJson from '../lib/fetchJson'
-import SiteLayout from '../components/SiteLayout'
+import Layout from 'components/layout/login'
 
 const Login = () => {
   const { mutateUser } = useUser({
@@ -36,19 +36,11 @@ const Login = () => {
   }
 
   return (
-    <SiteLayout title="Aces Login" black="Aces" blue="Login">
-      <div className="login">
-        <Form isLogin errorMessage={errorMsg} onSubmit={handleSubmit} />
+    <Layout title="Aces Login" black="Aces" blue="Login">
+      <div className="bg-purple-500">
+          <Form isLogin errorMessage={errorMsg} onSubmit={handleSubmit} />
       </div>
-      <style jsx>{`
-        .login {
-          max-width: 21rem;
-          padding: 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-        }
-      `}</style>
-    </SiteLayout>
+    </Layout>
   )
 }
 

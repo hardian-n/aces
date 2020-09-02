@@ -1,15 +1,21 @@
 import useUser from '../../lib/useUser'
-import DashboardLayout from '../../components/DashboardLayout'
+import Layout from 'components/layout/dashboard'
+import DashboardHeader from 'components/heading/license'
 
 const Settings = () => {
   const { user } = useUser({ redirectTo: '/login' })
 
   if (!user || user.isLoggedIn === false) {
-    return <DashboardLayout></DashboardLayout>
+    return <Layout></Layout>
   }
 
   return (
-    <DashboardLayout title="License Setting" user={user} black="License" blue="Setting" />
+    <Layout title="License Setting" user={user} black="License" blue="Setting">
+      <DashboardHeader />
+      <div className="container max-w-5xl mx-auto px-6 py-6">
+        XXX
+      </div>
+    </Layout>
   )
 }
 

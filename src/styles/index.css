@@ -1,0 +1,70 @@
+@tailwind base;
+
+/* Write your own custom base styles here */
+
+/* Start purging... */
+@tailwind components;
+/* Stop purging. */
+
+/* Write you own custom component styles here */
+.btn-blue {
+  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
+}
+.z-101 {
+  z-index: 101;
+}
+.opacity-85 {
+  opacity: 0.85;
+}
+.opacity-90 {
+  opacity: 0.90;
+}
+.scrolled #site-nav {
+  box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.1);
+  -webkit-backdrop-filter: saturate(180%) blur(5px);
+    backdrop-filter: saturate(180%) blur(5px);
+}
+.scrolled #site-nav .site-nav-center {
+  display: none;
+}
+.dashboard-menu {
+  @apply inline-block relative px-3 py-4;
+}
+.dashboard-menu.active::before {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 0px;
+  left: 9px;
+  right: 9px;
+  bottom: 0px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: currentcolor;
+}
+#aces-auth.scrolled {
+  padding-top: 3rem;
+}
+#aces-auth.scrolled #dashboard-nav {
+/* .submenu-scrolled { */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 15px 0px; */
+  box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.075);
+}
+.dashboard-heading {
+  @apply text-4xl text-gray-900 font-light;
+}
+.dashboard-heading span {
+  @apply text-red-600;
+}
+
+
+
+/* Start purging... */
+@tailwind utilities;
+/* Stop purging. */
+
+/* Your own custom utilities */
