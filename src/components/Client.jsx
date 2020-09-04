@@ -1,6 +1,6 @@
 import { trigger } from 'swr'
 import fetchJson from '../lib/fetchJson'
-import getClient from "../lib/getClient";
+import useSWR from 'swr'
 import DashboardHeader from 'components/heading/clients'
 // import FormEditClient from "../components/FormEditClient";
 
@@ -13,8 +13,8 @@ export const LoadingOrNotFound = (msg = "Not found") => {
 }
 
 const Client = ({ user, id }) => {
-  const { client, mutateClient } = getClient(user, id)
-  console.log("Init component: <Client>")
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/clients/${user.license}/${id}`
+  const { data: client, mutate: mutateClient } = useSWR([url, user.token], apiFetchGet)
 
   if (!client) return LoadingOrNotFound("Loading...")
   if (client.detail) return LoadingOrNotFound("Tidak ketemu")
