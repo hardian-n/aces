@@ -1,8 +1,9 @@
 import { trigger } from 'swr'
-import fetchJson from '../lib/fetchJson'
-import getProject from "../lib/getProject";
-import DashboardHeader from 'components/heading/project'
-import FormEditProject from "../components/FormEditProject";
+import fetchJson from 'lib/fetchJson'
+import DashboardHeader from 'components/heading/projects'
+import FormEditProject from "components/FormEditProject";
+import useSWR from 'swr'
+import apiFetchGet from 'lib/apiFetchGet'
 
 export const LoadingOrNotFound = (msg = "Not found") => {
   return (
@@ -13,8 +14,10 @@ export const LoadingOrNotFound = (msg = "Not found") => {
 }
 
 const Project = ({ user, id }) => {
-  const { project, mutateProject } = getProject(user, id)
   console.log("Init component: <Project>")
+
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/projects/${id}`
+  const { data: project, mutate: mutateProject } = useSWR([url, user.token], apiFetchGet)
 
   if (!project) return LoadingOrNotFound("Loading...")
   if (project.detail) return LoadingOrNotFound("Tidak ketemu")

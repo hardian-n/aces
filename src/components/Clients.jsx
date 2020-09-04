@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import getClients from "lib/getClients";
-import DashboardHeader from 'components/heading/client'
+import useSWR from 'swr'
+import apiFetchGet from 'lib/apiFetchGet'
+import DashboardHeader from 'components/heading/clients'
 
 export const Loading = (msg = "Loading...") => {
   return (
@@ -11,7 +12,8 @@ export const Loading = (msg = "Loading...") => {
 }
 
 const Clients = ({ user, subtitle }) => {
-  const { clients } = getClients(user)
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/clients/${user.license}`
+  const { data: clients, mutate: mutateClients } = useSWR([url, user.token], apiFetchGet)
 
   if (!clients) return Loading()
 

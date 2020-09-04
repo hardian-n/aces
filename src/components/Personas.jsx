@@ -1,4 +1,4 @@
-import DashboardHeader from 'components/heading/modules'
+import DashboardHeader from 'components/heading/personas'
 
 export const Loading = (msg = "Loading...") => {
   return (
@@ -8,15 +8,16 @@ export const Loading = (msg = "Loading...") => {
   )
 }
 
-const Modules = ({ user, projectId, subtitle }) => {
+const Personas = ({ user, projectId, subtitle }) => {
+
   return (
     <div>
       <DashboardHeader client={false} subtitle={subtitle} />
       <div className="container max-w-5xl mx-auto px-6 py-6">
-        PROJECT MODULES
+        PROJECT PERSONAS
       </div>
     </div>
   )
 }
 
-export default Modules
+export default Personas

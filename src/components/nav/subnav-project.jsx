@@ -6,12 +6,14 @@ const links = [
   { href: '/modules', label: 'Modules' },
   { href: '/members', label: 'Members' },
   { href: '/personas', label: 'Personas' },
-  { href: '/settings', label: 'Settings' },
+  { href: '/batches', label: 'Batches' },
+  // { href: '/settings', label: 'Settings' },
 ]
 
 export default function Subnav() {
   const router = useRouter()
   const { license, projectId } = router.query
+  const prefix = `/${license}/${projectId}`
   const normalClass = "dashboard-menu hover:text-indigo-600"
   const activeClass = normalClass + " active"
 
@@ -24,8 +26,8 @@ export default function Subnav() {
           </div>
           <div className="-ml-3">
           {links.map(({href, label}) => (
-            <Link key={`${href}${label}`} href={`/${license}/${projectId}${href}`}>
-            <a className={router.pathname == href ? activeClass : normalClass}>{label}</a>
+            <Link key={`${href}${label}`} href={`/[license]/[projectId]${href}`} as={`${prefix}${href}`}>
+              <a className={router.asPath == prefix + href ? activeClass : normalClass}>{label}</a>
             </Link>
           ))}
           </div>

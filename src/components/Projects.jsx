@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import getProjects from "../lib/getProjects";
-import getLicense from 'lib/getLicense'
-import DashboardHeader from 'components/heading/project'
+import DashboardHeader from 'components/heading/projects'
+import useSWR from 'swr'
+import apiFetchGet from 'lib/apiFetchGet'
 
 export const Loading = (msg = "Loading...") => {
   return (
@@ -12,7 +12,8 @@ export const Loading = (msg = "Loading...") => {
 }
 
 const Projects = ({ user, subtitle }) => {
-  const { projects } = getProjects(user)
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + '/projects'
+  const { data: projects, mutate: mutateProjects } = useSWR([url, user.token], apiFetchGet)
 
   if (!projects) return Loading()
 

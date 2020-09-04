@@ -24,7 +24,7 @@ export default class Layout extends React.Component {
   render () {
     return (
       <div id="aces-auth">
-        <UserNav user={this.props.user}/>
+        <UserNav />
         <DashboardNav />
         {this.props.children}
       </div>

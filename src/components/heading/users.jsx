@@ -1,13 +1,13 @@
-const DashboardHeader = ({ license }) => {
+const DashboardHeader = ({ subtitle }) => {
   return (
     <div>
       <div className="max-w-5xl mx-auto px-6">
         <div className="py-12 border-b border-red-300">
           <h2 className="dashboard-heading">
-          <span>ACES</span> Team Members
+            License Users
           </h2>
           <p className="text-gray-600 text-sm font-light">
-            Di mana bumi dipijak di situ perjaka bertindak
+          {subtitle && subtitle}
           </p>
         </div>
       </div>

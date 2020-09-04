@@ -1,20 +1,17 @@
 import useUser from 'lib/useUser'
 import Layout from 'components/layout/dashboard'
-import DashboardHeader from 'components/heading/license'
+import License from 'components/License'
+import Unauthorized from 'components/unauthorized'
 
 const UserPage = () => {
   const { user } = useUser({ redirectTo: '/login' })
+  const subtitle = "Manage your Aces License"
 
-  if (!user || user.isLoggedIn === false) {
-    return <Layout></Layout>
-  }
+  if (!user || user.isLoggedIn === false) return <Unauthorized/>
 
   return (
-    <Layout title="License Setting" user={user} black="License" blue="Setting">
-      <DashboardHeader />
-      <div className="container max-w-5xl mx-auto px-6 py-6">
-        XXX
-      </div>
+    <Layout user={user}>
+      <License user={user} subtitle={subtitle} />
     </Layout>
   )
 }

@@ -1,11 +1,16 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import fetchJson from 'lib/fetchJson'
-import getLicense from 'lib/getLicense'
+import useUser from 'lib/useUser'
+import useSWR from 'swr'
+import apiFetchGet from 'lib/apiFetchGet'
 
-const UserNav = ({ user }) => {
-  const { license } = getLicense(user)
+
+const UserNav = () => {
   const router = useRouter()
+  const { user, mutateUser } = useUser({ redirectTo: '/login' })
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + '/licenses'
+  const { data: license } = useSWR([url, user?.token], apiFetchGet)
 
   return (
     <div>
@@ -31,19 +36,19 @@ const UserNav = ({ user }) => {
               </svg>
             </span>
             <div>
-              <span className="font-semibold text-gray-800">{license?.licenseName}</span>
+              <span className="font-semibold text-gray-800">{license?.slug.toUpperCase()}</span>
             </div>
           </div>
           <div className="flex-none">
             <div className="flex items-center justify-end">
               <a href="#" className="px-2 mr-2 hover:text-indigo-700">Contact</a>
-              {/* <Link href="/api/logout"> */}
+              <Link href="/api/logout">
                 <a href="/api/logout" onClick={async (e) => {
                     e.preventDefault()
                     await mutateUser(fetchJson('/api/logout'))
                     router.push('/login')
                   }} className="bg-indigo-600 border border-indigo-500 rounded py-1 px-3 text-white hover:bg-transparent hover:text-indigo-700">Logout</a>
-              {/* </Link> */}
+              </Link>
             </div>
           </div>
         </div>

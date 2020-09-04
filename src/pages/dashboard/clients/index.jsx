@@ -1,23 +1,13 @@
-import Head from 'next/head'
-import DefaultErrorPage from 'next/error'
 import useUser from 'lib/useUser'
 import Layout from 'components/layout/dashboard'
 import Clients from "components/Clients";
+import Unauthorized from 'components/unauthorized'
 
 const UserPage = () => {
   const { user } = useUser({ redirectTo: '/login' })
-  const subtitle = "List of Clients"
+  const subtitle = "List of all of your Aces clients"
 
-  if (!user || user.isLoggedIn === false) {
-    return (
-      <div>
-        <Head>
-          <meta name="robots" content="noindex" />
-        </Head>
-        <DefaultErrorPage statusCode={404} />
-      </div>
-    )
-  }
+  if (!user || user.isLoggedIn === false) return <Unauthorized/>
 
   return (
     <Layout user={user}>

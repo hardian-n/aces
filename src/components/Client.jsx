@@ -1,7 +1,7 @@
 import { trigger } from 'swr'
 import fetchJson from '../lib/fetchJson'
 import getClient from "../lib/getClient";
-import DashboardHeader from 'components/heading/client'
+import DashboardHeader from 'components/heading/clients'
 // import FormEditClient from "../components/FormEditClient";
 
 export const LoadingOrNotFound = (msg = "Not found") => {

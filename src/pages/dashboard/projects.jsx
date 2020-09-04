@@ -1,23 +1,13 @@
-import Head from 'next/head'
-import DefaultErrorPage from 'next/error'
 import useUser from 'lib/useUser'
 import Layout from 'components/layout/dashboard'
 import Projects from "components/Projects";
+import Unauthorized from 'components/unauthorized'
 
 const UserPage = () => {
   const { user } = useUser({ redirectTo: '/login' })
-  const subtitle = "Di mana proyek bergelimang..."
+  const subtitle = "Manage your Aces projects"
 
-  if (!user || user.isLoggedIn === false) {
-    return (
-      <div>
-        <Head>
-          <meta name="robots" content="noindex" />
-        </Head>
-        <DefaultErrorPage statusCode={404} />
-      </div>
-    )
-  }
+  if (!user || user.isLoggedIn === false) return <Unauthorized/>
 
   return (
     <Layout user={user}>
