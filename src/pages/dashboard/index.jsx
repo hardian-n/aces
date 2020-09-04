@@ -1,6 +1,6 @@
 import useUser from 'lib/useUser'
 import Layout from 'components/layout/dashboard'
-import Dashboard from 'components/dashboard'
+import Dashboard from 'components/Dashboard'
 import Unauthorized from 'components/unauthorized'
 
 const UserPage = () => {
