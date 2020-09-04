@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Form = ({ errorMessage, onSubmit }) => (
-  <div className="">
-    <div className="bg-white h-16" />
+  <div className="w-full">
+    {/* <div className="bg-white h-16" /> */}
     <div className="w-full max-w-xs mx-auto py-16">
       <form onSubmit={onSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
@@ -21,10 +21,10 @@ const Form = ({ errorMessage, onSubmit }) => (
         </div>
         {errorMessage && <p className="text-red-500 my-3">{errorMessage}</p>}
         <div className="flex items-center justify-between">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          <button className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
             Sign In
           </button>
-          <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+          <a className="inline-block align-baseline font-bold text-sm text-purple-500 hover:text-purple-800" href="#">
             Forgot Password?
           </a>
         </div>

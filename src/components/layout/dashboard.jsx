@@ -1,7 +1,6 @@
 import React from 'react'
-import UserNav from 'components/nav/user'
-import DashboardNav from 'components/nav/dashboard'
-
+import UserNav from 'components/nav/nav-user'
+import DashboardNav from 'components/nav/subnav-user'
 
 export default class Layout extends React.Component {
 
@@ -25,9 +24,8 @@ export default class Layout extends React.Component {
   render () {
     return (
       <div id="aces-auth">
-        <UserNav license={null}/>
+        <UserNav user={this.props.user}/>
         <DashboardNav />
-        {/* <DashboardHeader /> */}
         {this.props.children}
       </div>
     )

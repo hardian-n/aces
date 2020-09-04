@@ -1,6 +1,6 @@
 import React from 'react'
-import UserNav from 'components/nav/user-project'
-import DashboardHeader from 'components/heading/projects'
+import UserNav from 'components/nav/nav-user'
+import Subnav from 'components/nav/subnav-project'
 
 export default class Layout extends React.Component {
 
@@ -21,12 +21,14 @@ export default class Layout extends React.Component {
     window.removeEventListener('scroll', this.handleScroll, false);
   }
 
+  // nav
+  // subnav
+
   render () {
     return (
       <div id="aces-auth">
-        <UserNav license={null}/>
-        <DashboardNav />
-        <DashboardHeader />
+        <UserNav user={this.props.user}/>
+        <Subnav />
         {this.props.children}
       </div>
     )

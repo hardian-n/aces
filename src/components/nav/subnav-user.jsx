@@ -9,7 +9,7 @@ const links = [
   { href: '/account', label: 'License' },
 ]
 
-export default function DashboardNav() {
+export default function Subnav() {
   const router = useRouter()
   const normalClass = "dashboard-menu hover:text-indigo-600"
   const activeClass = normalClass + " active"

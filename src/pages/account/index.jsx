@@ -1,8 +1,8 @@
-import useUser from '../../lib/useUser'
+import useUser from 'lib/useUser'
 import Layout from 'components/layout/dashboard'
 import DashboardHeader from 'components/heading/license'
 
-const Settings = () => {
+const UserPage = () => {
   const { user } = useUser({ redirectTo: '/login' })
 
   if (!user || user.isLoggedIn === false) {
@@ -19,4 +19,4 @@ const Settings = () => {
   )
 }
 
-export default Settings
+export default UserPage

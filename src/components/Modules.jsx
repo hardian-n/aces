@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import getProjects from "../lib/getProjects";
+import getProject from "../lib/getProject";
 import getLicense from 'lib/getLicense'
 import DashboardHeader from 'components/heading/project'
 
@@ -11,26 +11,16 @@ export const Loading = (msg = "Loading...") => {
   )
 }
 
-const Projects = ({ user, subtitle }) => {
-  const { projects } = getProjects(user)
+const Modules = ({ user, projectId, subtitle }) => {
+  const { project, mutateProject } = getProject(user, projectId)
 
-  if (!projects) return Loading()
+  if (!project) return Loading()
 
   return (
     <div>
       <DashboardHeader client={false} subtitle={subtitle} />
       <div className="container max-w-5xl mx-auto px-6 py-6">
-        {projects.map((project) => (
-          <div key={project._id}>
-            <h3 className="font-normal">
-              <Link href={`/[license]/[projectId]`} as={`/${project.license}/${project._id}`}>
-                <a className="abc">{project.title}</a>
-              </Link>
-            </h3>
-            <pre>ID    : {project._id}</pre>
-            <pre>Client: {project.client}</pre>
-          </div>
-        ))}
+        <pre className="pre">{JSON.stringify(project.modules, null, 2)}</pre>
       </div>
 
       <style jsx>{`
@@ -57,4 +47,4 @@ const Projects = ({ user, subtitle }) => {
   )
 }
 
-export default Projects
+export default Modules

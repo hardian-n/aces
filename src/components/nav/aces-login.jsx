@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export default function SiteNav() {
   return (
-    <div id="site-nav" className="fixed w-full bg-white opacity-90 z-101">
+    <div id="site-nav" className="__fixed w-full bg-white opacity-90 z-101">
       <div className="
       flex flex-row items-center
       text-sm text-gray-600 font-light
@@ -24,29 +24,12 @@ export default function SiteNav() {
           </Link>
         </div>
         <div className="flex-1">
-          <ul className="site-nav-center flex justify-center mx-auto">
-            <li className="flex mx-2">
-              <Link href="/dashboard">
-                <a className="hover:text-indigo-700">Solutions</a>
-                </Link>
-            </li>
-            <li className="flex mx-2">
-              <a href="#" className="hover:text-indigo-700">Resources</a>
-            </li>
-            <li className="flex mx-2">
-              <a href="#" className="hover:text-indigo-700">Pricing</a>
-            </li>
-          </ul>
+
         </div>
         <div className="flex-1">
-          <div className="flex items-center justify-end">
-            <Link href="/contact">
-              <a className="px-2 mr-2 hover:text-indigo-700">Contact</a>
-            </Link>
-            <Link href="/login">
-              <a href="#" className="bg-indigo-500 border border-indigo-500 rounded py-1 px-3 text-white hover:bg-transparent hover:text-indigo-700">Login</a>
-            </Link>
-          </div>
+          <p className="text-right text-gray-900">
+            Restricted Area
+          </p>
         </div>
       </div>
     </div>

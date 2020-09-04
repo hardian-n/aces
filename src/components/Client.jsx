@@ -1,6 +1,7 @@
 import { trigger } from 'swr'
 import fetchJson from '../lib/fetchJson'
 import getClient from "../lib/getClient";
+import DashboardHeader from 'components/heading/client'
 // import FormEditClient from "../components/FormEditClient";
 
 export const LoadingOrNotFound = (msg = "Not found") => {
@@ -37,15 +38,18 @@ const Client = ({ user, id }) => {
 
   return (
     <div>
-      <table>
-        <tbody>
-        <tr><td colSpan="2"><h3>{client.name}</h3></td></tr>
-        <tr><td>ID</td><td>{client._id}</td></tr>
-        <tr><td>Address</td><td>{client.address}</td></tr>
-        </tbody>
-      </table>
-      <br/>
-      {/* <FormEditClient model={client} submitHandler={submitHandler} /> */}
+      <DashboardHeader client={client} />
+
+      <div className="container max-w-5xl mx-auto px-6 py-6">
+        <table>
+          <tbody>
+          <tr><td colSpan="2"><h3>{client.name}</h3></td></tr>
+          <tr><td>ID</td><td>{client._id}</td></tr>
+          <tr><td>Address</td><td>{client.address}</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <style jsx>{`
         table {
           border-collapse: collapse;

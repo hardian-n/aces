@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import getProjects from "../lib/getProjects";
-import getLicense from 'lib/getLicense'
+import getProjects from "lib/getProjects";
 import DashboardHeader from 'components/heading/project'
 
 export const Loading = (msg = "Loading...") => {
@@ -11,7 +10,7 @@ export const Loading = (msg = "Loading...") => {
   )
 }
 
-const Projects = ({ user, subtitle }) => {
+const Dashboard = ({ user, subtitle }) => {
   const { projects } = getProjects(user)
 
   if (!projects) return Loading()
@@ -57,4 +56,4 @@ const Projects = ({ user, subtitle }) => {
   )
 }
 
-export default Projects
+export default Dashboard

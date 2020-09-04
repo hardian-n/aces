@@ -37,9 +37,9 @@ const Login = () => {
 
   return (
     <Layout title="Aces Login" black="Aces" blue="Login">
-      <div className="bg-purple-500">
+      {/* <div className="___bg-purple-500"> */}
           <Form isLogin errorMessage={errorMsg} onSubmit={handleSubmit} />
-      </div>
+      {/* </div> */}
     </Layout>
   )
 }
