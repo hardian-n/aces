@@ -1,9 +1,9 @@
-import SiteLayout from '../components/SiteLayout'
+import Layout from 'components/layout/aces'
 
 const Guide = () => (
-  <SiteLayout title="Aces Guide" black="Project" blue="Howtos">
+  <Layout title="Aces Guide" black="Project" blue="Howtos">
     <p>DOCS...</p>
-  </SiteLayout>
+  </Layout>
 )
 
 export default Guide

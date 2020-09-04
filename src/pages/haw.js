@@ -1,9 +1,9 @@
-import SiteLayout from '../components/SiteLayout'
+import Layout from 'components/layout/aces'
 
 const HAW = () => (
-  <SiteLayout title="How Aces Works" black="How Aces" blue="Works">
+  <Layout title="How Aces Works" black="How Aces" blue="Works">
     <p>HOW...</p>
-  </SiteLayout>
+  </Layout>
 )
 
 export default HAW

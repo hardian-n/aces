@@ -1,9 +1,9 @@
-import SiteLayout from '../components/SiteLayout'
+import Layout from 'components/layout/aces'
 
 const Pricing = () => (
-  <SiteLayout title="Predictable Pricing" black="Predictable" blue="Pricing">
+  <Layout title="Predictable Pricing" black="Predictable" blue="Pricing">
     <p>PRICING...</p>
-  </SiteLayout>
+  </Layout>
 )
 
 export default Pricing

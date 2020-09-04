@@ -1,9 +1,9 @@
-import SiteLayout from '../components/SiteLayout'
+import Layout from 'components/layout/aces'
 
 const About = () => (
-  <SiteLayout title="About Aces" black="About" blue="Aces">
+  <Layout title="About Aces" black="About" blue="Aces">
     <p>ABOUT...</p>
-  </SiteLayout>
+  </Layout>
 )
 
 export default About
