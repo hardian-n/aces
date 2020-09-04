@@ -7,7 +7,7 @@ import Project from "components/Project";
 import { useRouter } from 'next/router';
 import apiFetchGet from 'lib/apiFetchGet'
 
-const ProjectPage = ({ project, projectId }) => {
+const ProjectPage = ({ staticProject, projectId }) => {
   const { user } = useUser({ redirectTo: '/login' })
   // const router = useRouter()
   // const { data, mutate } = getProject(user, projectId)
@@ -26,8 +26,17 @@ const ProjectPage = ({ project, projectId }) => {
 
   return (
     <Layout user={user}>
+      <pre>{JSON.stringify(staticProject, null, 2)}</pre>
       <Project user={user} id={projectId} />
-
+      <style jsx>{`
+      pre {
+        max-width: 40rem;
+        max-height: 16rem;
+        margin: 1rem auto;
+        background: #f0f0f0;
+        overflow: scroll;
+      }
+      `}</style>
     </Layout>
   )
 }
@@ -35,9 +44,9 @@ const ProjectPage = ({ project, projectId }) => {
 export async function getStaticProps({ params }) {
   const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${params.license}/projects/${params.projectId}`
   const res = await fetch(url)
-  const project = await res.json()
+  const staticProject = await res.json()
   await new Promise(res => setTimeout(res, 1000))
-  return { props: { project, projectId: project._id, license: params.license }, revalidate: 1 }
+  return { props: { staticProject, projectId: staticProject._id, license: params.license }, revalidate: 1 }
 }
 
 export async function getStaticPaths(license) {

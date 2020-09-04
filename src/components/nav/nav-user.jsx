@@ -16,7 +16,7 @@ const UserNav = ({ user }) => {
         max-w-5xl mx-auto px-6 my-4
         ">
           <div className="flex flex-1 items-center">
-            <Link href="/">
+            <Link href="/dashboard">
               <a className="inline-block mr-2 text-indigo-700">
                 <svg className="bg-transparent rounded fill-current w-auto block h-8" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
                   <g transform="matrix(0.692243,0,0,0.692243,-61.5179,-61.4554)">
