@@ -2,7 +2,7 @@ import Head from 'next/head'
 import DefaultErrorPage from 'next/error'
 import useUser from '../../../lib/useUser'
 import Layout from 'components/layout/dashboard'
-import Contracts from "../../../components/Contracts";
+// import Contracts from "../../../components/Contracts";
 
 const ContractsPage = () => {
   const { user } = useUser({ redirectTo: '/login' })
@@ -23,7 +23,7 @@ const ContractsPage = () => {
 
   return (
     <Layout user={user} title="Your Clients" black="Your" blue="Clients">
-      <Contracts user={user} />
+      {/* <Contracts user={user} /> */}
     </Layout>
   )
 }
