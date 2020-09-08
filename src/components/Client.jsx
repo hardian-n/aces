@@ -1,8 +1,9 @@
 import { trigger } from 'swr'
-import fetchJson from '../lib/fetchJson'
-import useSWR from 'swr'
+import fetchJson from 'lib/fetchJson'
 import DashboardHeader from 'components/heading/clients'
-// import FormEditClient from "../components/FormEditClient";
+import FormEditClient from "components/form/formEditClient";
+import useSWR from 'swr'
+import apiFetchGet from 'lib/apiFetchGet'
 
 export const LoadingOrNotFound = (msg = "Not found") => {
   return (
@@ -22,7 +23,7 @@ const Client = ({ user, id }) => {
   const submitHandler = async (values, {setSubmitting}) => {
     console.log(JSON.stringify(values, null, 2))
     console.log(values)
-    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/clients/${id}`
+    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/clients/${user.license}/${id}`
     const json = await fetchJson(url, {
       method: 'PUT',
       headers: {
@@ -48,6 +49,8 @@ const Client = ({ user, id }) => {
           <tr><td>Address</td><td>{client.address}</td></tr>
           </tbody>
         </table>
+        <br />
+        <FormEditClient model={client} submitHandler={submitHandler} />
       </div>
 
       <style jsx>{`
