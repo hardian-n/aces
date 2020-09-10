@@ -17,6 +17,8 @@ const Dashboard = ({ user, subtitle }) => {
   const { data: license } = useSWR([url2, user?.token], apiFetchGet)
   const url3 = process.env.NEXT_PUBLIC_BASE_API_URL + `/clients/${user.license}`
   const { data: clients, mutate: mutateClients } = useSWR([url3, user.token], apiFetchGet)
+  const url4 = process.env.NEXT_PUBLIC_BASE_API_URL + '/users'
+  const { data: users, mutate: mutateUsers } = useSWR([url4, user.token], apiFetchGet)
 
   console.log(license)
 
