@@ -1,7 +1,7 @@
 import { trigger } from 'swr'
 import fetchJson from 'lib/fetchJson'
 import DashboardHeader from 'components/heading/users'
-import FormEditClient from "components/form/formEditClient";
+import FormEditUser from "components/form/formEditUser";
 import useSWR from 'swr'
 import apiFetchGet from 'lib/apiFetchGet'
 
@@ -13,9 +13,10 @@ export const LoadingOrNotFound = (msg = "Not found") => {
   )
 }
 
-const Client = ({ user, id }) => {
+const User = ({ user, id }) => {
   const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/users/${id}`
   const { data: userdata, mutate: mutateUser } = useSWR([url, user.token], apiFetchGet)
+  const disableClass = "text-red-700"
 
   if (!userdata) return LoadingOrNotFound("Loading...")
   if (userdata.detail) return LoadingOrNotFound("Tidak ketemu")
@@ -23,7 +24,7 @@ const Client = ({ user, id }) => {
   const submitHandler = async (values, {setSubmitting}) => {
     console.log(JSON.stringify(values, null, 2))
     console.log(values)
-    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/clients/${user.license}/${id}`
+    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/users/${id}`
     const json = await fetchJson(url, {
       method: 'PUT',
       headers: {
@@ -46,11 +47,13 @@ const Client = ({ user, id }) => {
           <tbody>
           <tr><td colSpan="2"><h3>{userdata.name}</h3></td></tr>
           <tr><td>ID</td><td>{userdata._id}</td></tr>
-          <tr><td>Address</td><td>{userdata.address}</td></tr>
+          <tr><td>Name</td><td>{userdata.name}</td></tr>
+          <tr><td>Verified</td>{ userdata.verified == false ? <td>Not Verified</td> : <td>Verified</td> }</tr>
+          <tr><td>Disabled</td>{ userdata.disabled == true ? <td className={disableClass}>User Disabled</td> : <td>User Enabled</td> }</tr>
           </tbody>
         </table>
         <br />
-        <FormEditClient model={user} submitHandler={submitHandler} />
+        <FormEditUser model={userdata} submitHandler={submitHandler} />
       </div>
 
       <style jsx>{`
@@ -72,4 +75,4 @@ const Client = ({ user, id }) => {
   )
 }
 
-export default Client
+export default User

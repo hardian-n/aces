@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import DefaultErrorPage from 'next/error'
-import useUser from '../../../lib/useUser'
+import useUser from 'lib/useUser'
 import Layout from 'components/layout/dashboard'
 // import Contracts from "../../../components/Contracts";
 
