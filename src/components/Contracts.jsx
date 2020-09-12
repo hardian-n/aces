@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import DashboardHeader from 'components/heading/projects'
+import DashboardHeader from 'components/heading/contracts'
 import useSWR from 'swr'
 import apiFetchGet from 'lib/apiFetchGet'
 
@@ -24,12 +24,12 @@ const Contracts = ({ user, subtitle }) => {
         {contracts.map((contract) => (
           <div key={contract._id}>
             <h3 className="font-normal">
-              <Link href={`/[license]/[contractId]`} as={`/${contract.license}/${contract._id}`}>
+              <Link href={``} as={``}>
                 <a className="abc">{contract.title}</a>
               </Link>
             </h3>
-            <pre>ID    : {project._id}</pre>
-            <pre>Client: {project.client}</pre>
+            <pre>ID    : {contract._id}</pre>
+            <pre>Client: {contract.client}</pre>
           </div>
         ))}
       </div>
