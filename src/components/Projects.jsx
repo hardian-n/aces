@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import DashboardHeader from 'components/heading/projects'
-import useSWR from 'swr'
+import FormEditProject from "components/form/formEditProject";
+import useSWR, {trigger} from 'swr'
 import apiFetchGet from 'lib/apiFetchGet'
+import fetchJson from 'lib/fetchJson'
 
 export const Loading = (msg = "Loading...") => {
   return (
@@ -14,13 +16,38 @@ export const Loading = (msg = "Loading...") => {
 const Projects = ({ user, subtitle }) => {
   const url = process.env.NEXT_PUBLIC_BASE_API_URL + '/projects'
   const { data: projects, mutate: mutateProjects } = useSWR([url, user.token], apiFetchGet)
+  const url3 = process.env.NEXT_PUBLIC_BASE_API_URL + `/clients/${user.license}`
+  const { data: clients, mutate: mutateClients } = useSWR([url3, user.token], apiFetchGet)
+  const url5 = process.env.NEXT_PUBLIC_BASE_API_URL + `/contracts/${user.license}`
+  const { data: contracts, mutate: mutateContracts } = useSWR([url5, user.token], apiFetchGet)
 
   if (!projects) return Loading()
+
+  const submitHandler = async (values, {setSubmitting, resetForm}) => {
+    console.log(JSON.stringify(values, null, 2))
+    console.log(values)
+    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/projects?client=${values.clients}&contract=${values.contracts}`
+    const json = await fetchJson(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + user.token,
+      },
+      body: JSON.stringify(values),
+    })
+    mutateProjects()
+    trigger()
+    console.log(json)
+    resetForm({values:''})
+  }
 
   return (
     <div>
       <DashboardHeader client={false} subtitle={subtitle} />
       <div className="container max-w-5xl mx-auto px-6 py-6">
+        {!clients && !contracts ?
+        'loading' :
+        <FormEditProject command={true} clients={clients} contracts={contracts} submitHandler={submitHandler} /> }
         {projects.map((project) => (
           <div key={project._id}>
             <h3 className="font-normal">
