@@ -9,7 +9,7 @@ import apiFetchGet from 'lib/apiFetchGet'
 const UserNav = () => {
   const router = useRouter()
   const { user, mutateUser } = useUser({ redirectTo: '/login' })
-  const url = process.env.NEXT_PUBLIC_BASE_API_URL + '/licenses'
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}`
   const { data: license } = useSWR([url, user?.token], apiFetchGet)
 
   return (

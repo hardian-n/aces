@@ -14,7 +14,7 @@ export const LoadingOrNotFound = (msg = "Not found") => {
 }
 
 const User = ({ user, id }) => {
-  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/users/${id}`
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/users/${id}`
   const { data: userdata, mutate: mutateUser } = useSWR([url, user.token], apiFetchGet)
   const disableClass = "text-red-700"
 
@@ -24,7 +24,7 @@ const User = ({ user, id }) => {
   const submitHandler = async (values, {setSubmitting}) => {
     console.log(JSON.stringify(values, null, 2))
     console.log(values)
-    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/users/${id}`
+    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/users/${id}`
     const json = await fetchJson(url, {
       method: 'PUT',
       headers: {

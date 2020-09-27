@@ -12,8 +12,16 @@ export const Loading = (msg = "Loading...") => {
 }
 
 const Clients = ({ user, subtitle }) => {
-  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/clients/${user.license}`
-  const { data: clients, mutate: mutateClients } = useSWR([url, user.token], apiFetchGet)
+  const url1 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/projects`
+  const { data: projects, mutate: mutateProjects } = useSWR([url1, user.token], apiFetchGet)
+  const url2 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}`
+  const { data: license, mutate: mutateLicense } = useSWR([url2, user.token], apiFetchGet)
+  const url3 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/clients`
+  const { data: clients, mutate: mutateClients } = useSWR([url3, user.token], apiFetchGet)
+  const url4 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/users`
+  const { data: users, mutate: mutateUsers } = useSWR([url4, user.token], apiFetchGet)
+  const url5 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/contracts`
+  const { data: contracts, mutate: mutateContracts } = useSWR([url5, user.token], apiFetchGet)
 
   if (!clients) return Loading()
 

@@ -14,11 +14,15 @@ export const Loading = (msg = "Loading...") => {
 }
 
 const Projects = ({ user, subtitle }) => {
-  const url = process.env.NEXT_PUBLIC_BASE_API_URL + '/projects'
-  const { data: projects, mutate: mutateProjects } = useSWR([url, user.token], apiFetchGet)
-  const url3 = process.env.NEXT_PUBLIC_BASE_API_URL + `/clients/${user.license}`
+  const url1 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/projects`
+  const { data: projects, mutate: mutateProjects } = useSWR([url1, user.token], apiFetchGet)
+  const url2 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}`
+  const { data: license, mutate: mutateLicense } = useSWR([url2, user.token], apiFetchGet)
+  const url3 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/clients`
   const { data: clients, mutate: mutateClients } = useSWR([url3, user.token], apiFetchGet)
-  const url5 = process.env.NEXT_PUBLIC_BASE_API_URL + `/contracts/${user.license}`
+  const url4 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/users`
+  const { data: users, mutate: mutateUsers } = useSWR([url4, user.token], apiFetchGet)
+  const url5 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/contracts`
   const { data: contracts, mutate: mutateContracts } = useSWR([url5, user.token], apiFetchGet)
 
   if (!projects) return Loading()
@@ -26,7 +30,7 @@ const Projects = ({ user, subtitle }) => {
   const submitHandler = async (values, {setSubmitting, resetForm}) => {
     console.log(JSON.stringify(values, null, 2))
     console.log(values)
-    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/projects?client=${values.clients}&contract=${values.contracts}`
+    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/projects?client=${values.clients}&contract=${values.contracts}`
     const json = await fetchJson(url, {
       method: 'POST',
       headers: {
@@ -45,9 +49,15 @@ const Projects = ({ user, subtitle }) => {
     <div>
       <DashboardHeader client={false} subtitle={subtitle} />
       <div className="container max-w-5xl mx-auto px-6 py-6">
-        {!clients && !contracts ?
+        {
+        !clients && !contracts ?
         'loading' :
-        <FormEditProject command={true} clients={clients} contracts={contracts} submitHandler={submitHandler} /> }
+        <FormEditProject 
+          command={true} 
+          clients={clients} 
+          contracts={contracts} 
+          submitHandler={submitHandler} /> 
+        }
         {projects.map((project) => (
           <div key={project._id}>
             <h3 className="font-normal">

@@ -14,16 +14,15 @@ export const LoadingOrNotFound = (msg = "Not found") => {
 }
 
 const Client = ({ user, id }) => {
-  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/clients/${user.license}/${id}`
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/clients/${id}`
   const { data: client, mutate: mutateClient } = useSWR([url, user.token], apiFetchGet)
 
   if (!client) return LoadingOrNotFound("Loading...")
-  if (client.detail) return LoadingOrNotFound("Tidak ketemu")
 
   const submitHandler = async (values, {setSubmitting}) => {
     console.log(JSON.stringify(values, null, 2))
     console.log(values)
-    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/clients/${user.license}/${id}`
+    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/clients/${id}`
     const json = await fetchJson(url, {
       method: 'PUT',
       headers: {

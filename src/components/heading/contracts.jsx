@@ -23,7 +23,7 @@ const DashboardHeader = ({ contract, subtitle }) => {
         <div className="py-12 border-b border-red-300">
 
           <h2 className="dashboard-heading">
-            {!contract && `Aces Projects`}
+            {!contract && `Contracts`}
             {contract && project.title}
           </h2>
           <p className="text-gray-600 text-sm font-light">

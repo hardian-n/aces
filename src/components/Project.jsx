@@ -16,16 +16,20 @@ export const LoadingOrNotFound = (msg = "Not found") => {
 const Project = ({ user, id }) => {
   console.log("Init component: <Project>")
 
-  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/projects/${id}`
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/projects/${id}`
   const { data: project, mutate: mutateProject } = useSWR([url, user.token], apiFetchGet)
+  const url3 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/clients`
+  const { data: clients, mutate: mutateClients } = useSWR([url3, user.token], apiFetchGet)
+  const url5 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/contracts`
+  const { data: contracts, mutate: mutateContracts } = useSWR([url5, user.token], apiFetchGet)
 
   if (!project) return LoadingOrNotFound("Loading...")
-  if (project.detail) return LoadingOrNotFound("Tidak ketemu")
+  if (!project.title) return LoadingOrNotFound("Tidak ketemu")
 
   const submitHandler = async (values, {setSubmitting}) => {
     console.log(JSON.stringify(values, null, 2))
     console.log(values)
-    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/projects/${id}`
+    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/projects/${id}`
     const json = await fetchJson(url, {
       method: 'PUT',
       headers: {
@@ -56,7 +60,7 @@ const Project = ({ user, id }) => {
           </tbody>
         </table>
         <br/>
-        <FormEditProject model={project} submitHandler={submitHandler} />
+        <FormEditProject model={project} clients={clients} contracts={contracts} submitHandler={submitHandler} />
       </div>
 
       <style jsx>{`

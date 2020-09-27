@@ -2,10 +2,11 @@ import Head from 'next/head'
 import DefaultErrorPage from 'next/error'
 import useUser from 'lib/useUser'
 import Layout from 'components/layout/dashboard'
-import Contracts from "../../../components/Contracts";
+import Contracts from "components/Contracts";
 
 const ContractsPage = () => {
   const { user } = useUser({ redirectTo: '/login' })
+  const subtitle = "List of your contracts"
 
   // This includes setting the noindex header because static files
   // always return a status 200 but the rendered not found page should
@@ -23,7 +24,7 @@ const ContractsPage = () => {
 
   return (
     <Layout user={user} title="Your Projects" black="Your" blue="Projects">
-      { <Contracts user={user} /> }
+      { <Contracts user={user} subtitle={subtitle} /> }
     </Layout>
   )
 }
