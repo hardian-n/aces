@@ -29,7 +29,7 @@ export default withSession(async (req, res) => {
       licenseOwner: userData.licenseOwner,
       verified: userData.verified,
       disabled: userData.disabled,
-      userRoles: userData.userRoles,
+      userRoles: userData.roles,
       token: token,
     }
     req.session.set('user', user)

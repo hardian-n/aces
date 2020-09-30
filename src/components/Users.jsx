@@ -2,6 +2,7 @@ import Link from 'next/link'
 import DashboardHeader from 'components/heading/users'
 import useSWR from 'swr'
 import apiFetchGet from 'lib/apiFetchGet'
+import FormEditUser from "components/form/formEditUser"
 
 export const Loading = (msg = "Loading...") => {
   return (
@@ -25,10 +26,39 @@ const Users = ({ user, subtitle }) => {
 
   if (!users) return Loading()
 
+  const submitHandler = async (values, {setSubmitting, resetForm}) => {
+    console.log(JSON.stringify(values, null, 2))
+    console.log(values)
+
+    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/users`
+    const json = await fetchJson(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + user.token,
+      },
+      body: JSON.stringify(values),
+    })
+    fetch('../api/sendEmail', {
+      method: 'POST',
+      headers: {
+        accept: 'application/json', 
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({ username: values.username, password: values.password, email: values.email,  })
+    })
+    mutateUsers()
+    trigger()
+    console.log(json)
+    resetForm({values:''})
+  
+  }
+
   return (
     <div>
       <DashboardHeader users={false} subtitle={subtitle} />
       <div className="container max-w-5xl mx-auto px-6 py-6">
+        <FormEditUser command={true} submitHandler={submitHandler} />
         {users.map((userdata) => (
           <div key={userdata._id}>
             <h3 className="font-normal">
