@@ -50,7 +50,7 @@ const Projects = ({ user, subtitle }) => {
       <DashboardHeader client={false} subtitle={subtitle} />
       <div className="container max-w-5xl mx-auto px-6 py-6">
         {
-        !clients && !contracts ?
+        !clients || !contracts ?
         'loading' :
         <FormEditProject 
           command={true} 

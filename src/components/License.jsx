@@ -1,6 +1,8 @@
 import DashboardHeader from 'components/heading/license'
-import useSWR from 'swr'
+import FormEditLicense from "components/form/formEditLicense";
+import useSWR, {trigger} from 'swr'
 import apiFetchGet from 'lib/apiFetchGet'
+import fetchJson from 'lib/fetchJson'
 
 export const Loading = (msg = "Loading...") => {
   return (
@@ -27,9 +29,27 @@ const License = ({ user, subtitle }) => {
   if (!license) return Loading("Loading...")
   if (!modules) return Loading("Loading...")
 
+  const submitHandler = async (values, {setSubmitting}) => {
+    console.log(JSON.stringify(values, null, 2))
+    console.log(values)
+    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}`
+    const json = await fetchJson(url, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + user.token,
+      },
+      body: JSON.stringify(values),
+    })
+    mutateLicense()
+    trigger()
+    console.log(json)
+  }
+
   return (
     <div>
       <DashboardHeader client={false} subtitle={subtitle} />
+      <FormEditLicense model={license} submitHandler={submitHandler} />
       <div className="container max-w-5xl mx-auto px-6 py-6">
         <table>
           <tbody>
@@ -42,17 +62,22 @@ const License = ({ user, subtitle }) => {
           <tr><td>Published By</td><td>{license.publishedBy}</td></tr>
           <tr><td>Published Date</td><td>{license.publishDate}</td></tr>
           <tr><td>Expired Date</td><td>{license.expiryDate}</td></tr>
-          <tr><td>Available Modules</td><td><table>
-          {modules.map((module) => (
-            <tr><td key={module._id}>
-              <h3 className="font-semibold">
-                <a className="abc">{module.title ? module.title : module.name}</a>
-              </h3>
-              <pre>ID    : {module._id}</pre>
-              <pre>Version: {module.version}</pre>
-            </td></tr>
-          ))}
-          </table></td></tr>
+          <tr><td>Available Modules</td><td><table><tbody>
+          {!modules ?
+          'loading' :
+            <>
+            {modules.map((module) => (
+              <tr key={module._id}><td>
+                <h3 className="font-semibold">
+                  <a className="abc">{module.title ? module.title : module.name}</a>
+                </h3>
+                <pre>ID    : {module._id}</pre>
+                <pre>Version: {module.version}</pre>
+              </td></tr>
+            ))}
+            </>
+          }
+          </tbody></table></td></tr>
           </tbody>
         </table>
         <br/>
