@@ -1,6 +1,8 @@
 import Link from 'next/link'
-import useSWR from 'swr'
+import useSWR, {trigger} from 'swr'
 import apiFetchGet from 'lib/apiFetchGet'
+import fetchJson from 'lib/fetchJson'
+import FormEditClient from "components/form/FormEditClient"
 import DashboardHeader from 'components/heading/clients'
 
 export const Loading = (msg = "Loading...") => {
@@ -24,23 +26,50 @@ const Clients = ({ user, subtitle }) => {
   const { data: contracts, mutate: mutateContracts } = useSWR([url5, user.token], apiFetchGet)
 
   if (!clients) return Loading()
+  const submitHandler = async (values, {setSubmitting, resetForm}) => {
+    console.log(JSON.stringify(values, null, 2))
+    console.log(values)
+
+    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/users`
+    const json = await fetchJson(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + user.token,
+      },
+      body: JSON.stringify(values),
+    })
+    fetch('../api/sendEmail', {
+      method: 'POST',
+      headers: {
+        accept: 'application/json', 
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({ username: values.username, password: values.password, email: values.email,  })
+    })
+    mutateUsers()
+    trigger()
+    console.log(json)
+    resetForm({values:''})
+  }
 
   return (
     <div>
       <DashboardHeader client={false} subtitle={subtitle} />
 
       <div className="container max-w-5xl mx-auto px-6 py-6">
-      {clients.map((client) => (
-        <div key={client._id}>
-          <h3 className="font-normal">
-            <Link href={`/dashboard/clients/[id]`} as={`/dashboard/clients/${client._id}`}>
-              <a className="abc">{client.name}</a>
-            </Link>
-          </h3>
-          <pre>ID    : {client._id}</pre>
-          <pre>Address: {client.address}</pre>
-        </div>
-      ))}
+        <FormEditClient command={true} submitHandler={submitHandler} />
+        {clients.map((client) => (
+          <div key={client._id}>
+            <h3 className="font-normal">
+              <Link href={`/dashboard/clients/[id]`} as={`/dashboard/clients/${client._id}`}>
+                <a className="abc">{client.name}</a>
+              </Link>
+            </h3>
+            <pre>ID    : {client._id}</pre>
+            <pre>Address: {client.address}</pre>
+          </div>
+        ))}
       </div>
 
       <style jsx>{`
