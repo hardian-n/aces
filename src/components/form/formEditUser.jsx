@@ -13,6 +13,12 @@ const FormEditProject = ({ command, model, submitHandler }) => {
     <Formik
     initialValues = {{
       disabled: model?.disabled ? model?.disabled : '',
+      name: model?.name ? model?.name : '',
+      username: model?.username ? model?.username : '',
+      email: model?.email ? model?.email : '',
+      gender: model?.gender ? model?.gender : '',
+      phone: model?.phone ? model?.phone : '',
+      password: model?.password ? model?.password : '',
     }}
     enableReinitialize = {true}
     validationSchema = {Yup.object({
@@ -41,7 +47,7 @@ const FormEditProject = ({ command, model, submitHandler }) => {
               <>
               <div className="flex items-center mb-3">
                 <div className="w-1/3">
-                  <label className={labelClass} htmlFor="title">Name</label>
+                  <label className={labelClass} htmlFor="name">Name</label>
                 </div>
                 <div className="w-2/3">
                   <Field className={inputClass} name="name" placeholder="" />
@@ -50,7 +56,7 @@ const FormEditProject = ({ command, model, submitHandler }) => {
               </div>
               <div className="flex items-center mb-3">
                 <div className="w-1/3">
-                  <label className={labelClass} htmlFor="title">Username</label>
+                  <label className={labelClass} htmlFor="username">Username</label>
                 </div>
                 <div className="w-2/3">
                   <Field className={inputClass} name="username" placeholder="" />
@@ -59,7 +65,7 @@ const FormEditProject = ({ command, model, submitHandler }) => {
               </div>
               <div className="flex items-center mb-3">
                 <div className="w-1/3">
-                  <label className={labelClass} htmlFor="title">Email</label>
+                  <label className={labelClass} htmlFor="email">Email</label>
                 </div>
                 <div className="w-2/3">
                   <Field className={inputClass} name="email" placeholder="" />
@@ -68,7 +74,7 @@ const FormEditProject = ({ command, model, submitHandler }) => {
               </div>
               <div className="flex items-center mb-3">
                 <div className="w-1/3">
-                  <label className={labelClass} htmlFor="title">Gander</label>
+                  <label className={labelClass} htmlFor="gender">Gander</label>
                 </div>
                 <div className="w-2/3">
                   <Field className={inputClass} name="gender" placeholder="" />
@@ -77,7 +83,7 @@ const FormEditProject = ({ command, model, submitHandler }) => {
               </div>
               <div className="flex items-center mb-3">
                 <div className="w-1/3">
-                  <label className={labelClass} htmlFor="title">Phone</label>
+                  <label className={labelClass} htmlFor="phone">Phone</label>
                 </div>
                 <div className="w-2/3">
                   <Field className={inputClass} name="phone" placeholder="" />
@@ -86,7 +92,7 @@ const FormEditProject = ({ command, model, submitHandler }) => {
               </div>
               <div className="flex items-center mb-3">
                 <div className="w-1/3">
-                  <label className={labelClass} htmlFor="title">Password</label>
+                  <label className={labelClass} htmlFor="password">Password</label>
                 </div>
                 <div className="w-2/3">
                   <Field className={inputClass} name="password" placeholder="" />

@@ -41,6 +41,7 @@ const UserNav = () => {
           </div>
           <div className="flex-none">
             <div className="flex items-center justify-end">
+              <a href="/dashboard/profile" className="px-2 mr-2 hover:text-indigo-700">Profile</a>
               <a href="#" className="px-2 mr-2 hover:text-indigo-700">Contact</a>
               <Link href="/api/logout">
                 <a href="/api/logout" onClick={async (e) => {
