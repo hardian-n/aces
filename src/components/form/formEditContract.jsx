@@ -87,6 +87,7 @@ const FormEditContract = ({ command, clients, model, submitHandler }) => {
                 className={inputClass}
                 dateFormat="dd-MM-yyyy"
                 onChange={startDate => setStartDate(startDate)}
+//                onChange={startDate => {model.startDate, startDate}}
               />
               <span><ErrorMessage name="startDate" /></span>
             </div>
