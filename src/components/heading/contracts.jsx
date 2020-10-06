@@ -6,7 +6,7 @@ const DashboardHeader = ({ contract, subtitle }) => {
       <div className="max-w-5xl mx-auto px-6">
         {contract && (
           <div className="absolute pt-2 z-0">
-            <Link href="/dashboard/projects">
+            <Link href="/dashboard/contracts">
               <a className="inline-block text-xs text-indigo-500 uppercase tracking-wide hover:text-indigo-700">
                 <svg className="bg-transparent rounded fill-current w-auto inline-block float-left h-3 -ml-1 mr-2" viewBox="0 0 443.52 443.520" xmlns="http://www.w3.org/2000/svg">
                   <g>
