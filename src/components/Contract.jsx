@@ -13,35 +13,28 @@ export const Loading = (msg = "Loading...") => {
   )
 }
 
-const Contracts = ({ user, subtitle }) => {
-  const url1 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/projects`
-  const { data: projects, mutate: mutateProjects } = useSWR([url1, user.token], apiFetchGet)
-  const url2 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}`
-  const { data: license, mutate: mutateLicense } = useSWR([url2, user.token], apiFetchGet)
+const Contracts = ({ user, subtitle, id }) => {
+  const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/contracts/${id}`
+  const { data: contract, mutate: mutateContract } = useSWR([url, user.token], apiFetchGet)
   const url3 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/clients`
   const { data: clients, mutate: mutateClients } = useSWR([url3, user.token], apiFetchGet)
-  const url4 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/users`
-  const { data: users, mutate: mutateUsers } = useSWR([url4, user.token], apiFetchGet)
-  const url5 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/contracts`
-  const { data: contracts, mutate: mutateContracts } = useSWR([url5, user.token], apiFetchGet)
 
-  if (!contracts) return Loading()
+  if (!contract) return Loading()
   if (!clients) return Loading()
-  if (contracts.length === '') return 'empty data'
 
   const submitHandler = async (values, {setSubmitting, resetForm}) => {
     console.log(JSON.stringify(values, null, 2))
     console.log(values)
-    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/contracts?client=${values.client}`
+    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/contracts/${id}`
     const json = await fetchJson(url, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         Accept: 'application/json',
         Authorization: 'Bearer ' + user.token,
       },
       body: JSON.stringify(values),
     })
-    mutateContracts()
+    mutateContract()
     trigger()
     console.log(json)
     resetForm({values:''})
@@ -49,14 +42,14 @@ const Contracts = ({ user, subtitle }) => {
 
   return (
     <div>
-      <DashboardHeader client={false} subtitle={subtitle} />
+      <DashboardHeader contract={contract} subtitle={subtitle} />
       <FormEditContract 
           command={true}
           clients={clients}
+          model={contract}
           submitHandler={submitHandler} />
       <div className="container max-w-5xl mx-auto px-6 py-6">
-        {contracts.map((contract) => (
-          <table key={contract._id}>
+          <table>
             <tbody>
               <tr><td colSpan='2'>
                 <h3 className="font-normal">
@@ -81,7 +74,7 @@ const Contracts = ({ user, subtitle }) => {
                     <tr><td className='pl-2'>Phone</td><td>: {kontak.phone}</td></tr>
                     <tr><td className='pl-2'>Email</td><td>: {kontak.email}</td></tr>
                     </tbody></table>
-                  )) : '-'
+                  )) : ': -'
                   }
                 </td></tr>
                 <tr><td>Admin</td><td>: {contract.admin}</td></tr>
@@ -96,12 +89,11 @@ const Contracts = ({ user, subtitle }) => {
                     <tr><td className='pl-2'>Price Level 2</td><td>: {pricing.priceLevel2}</td></tr>
                     <tr><td className='pl-2'>Price Level 3</td><td>: {pricing.priceLevel3}</td></tr>
                   </tbody></table>
-                  )) : '-'}
+                  )) : ': -'}
                   </td>
                 </tr>
             </tbody>
           </table>            
-        ))}
       </div>
 
       <style jsx>{`

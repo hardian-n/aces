@@ -1,12 +1,7 @@
-/**
- * FormEditProject.jsx
- * ===================
- *
- */
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 
-const FormEditProject = ({ command, model, submitHandler }) => {
+const FormEditClient = ({ command, model, submitHandler }) => {
   const inputClass = "bg-gray-200 appearance-none border border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
   const labelClass = "block text-gray-700 text-right mb-1 pr-2"
   const buttonClass = "block w-full shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 mt-4 rounded"
@@ -71,4 +66,4 @@ const FormEditProject = ({ command, model, submitHandler }) => {
   )
 }
 
-export default FormEditProject
+export default FormEditClient

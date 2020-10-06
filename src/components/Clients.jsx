@@ -30,7 +30,7 @@ const Clients = ({ user, subtitle }) => {
     console.log(JSON.stringify(values, null, 2))
     console.log(values)
 
-    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/users`
+    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/clients`
     const json = await fetchJson(url, {
       method: 'POST',
       headers: {
@@ -39,15 +39,7 @@ const Clients = ({ user, subtitle }) => {
       },
       body: JSON.stringify(values),
     })
-    fetch('../api/sendEmail', {
-      method: 'POST',
-      headers: {
-        accept: 'application/json', 
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify({ username: values.username, password: values.password, email: values.email,  })
-    })
-    mutateUsers()
+    mutateClients()
     trigger()
     console.log(json)
     resetForm({values:''})

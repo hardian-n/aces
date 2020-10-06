@@ -1,5 +1,6 @@
 import { SWRConfig } from 'swr'
 import fetch from '../lib/fetchJson'
+import "react-datepicker/dist/react-datepicker.css"
 import 'styles/index.css'
 
 function MyApp({ Component, pageProps }) {
