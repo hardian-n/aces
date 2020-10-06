@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import DatePicker from "react-datepicker"
 import { useState } from 'react'
-import moment from 'moment';
+import moment from 'moment'
 
 const FormEditProject = ({ command, clients, contracts, model, submitHandler }) => {
   const inputClass = "bg-gray-200 appearance-none border border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
