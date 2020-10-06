@@ -3,7 +3,6 @@ import DashboardHeader from 'components/heading/modules'
 import useSWR from 'swr'
 import apiFetchGet from 'lib/apiFetchGet'
 import fetchJson from 'lib/fetchJson'
-import FormEditContract from './form/FormEditContract'
 
 export const Loading = (msg = "Loading...") => {
   return (
