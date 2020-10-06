@@ -2,7 +2,7 @@ import Link from 'next/link'
 import useSWR, {trigger} from 'swr'
 import apiFetchGet from 'lib/apiFetchGet'
 import fetchJson from 'lib/fetchJson'
-import FormEditClient from "components/form/FormEditClient"
+import FormEditClient from 'components/form/FormEditClient'
 import DashboardHeader from 'components/heading/clients'
 
 export const Loading = (msg = "Loading...") => {

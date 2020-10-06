@@ -1,7 +1,7 @@
 import { trigger } from 'swr'
 import fetchJson from 'lib/fetchJson'
 import DashboardHeader from 'components/heading/clients'
-import FormEditClient from "components/form/formEditClient";
+import FormEditClient from 'components/form/formEditClient'
 import useSWR from 'swr'
 import apiFetchGet from 'lib/apiFetchGet'
 
