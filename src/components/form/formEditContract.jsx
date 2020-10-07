@@ -8,15 +8,13 @@ const FormEditContract = ({ command, clients, model, submitHandler }) => {
   const inputClass = "bg-gray-200 appearance-none border border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
   const labelClass = "block text-gray-700 text-right mb-1 pr-2"
   const buttonClass = "block w-full shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 mt-4 rounded"
-  const [startDate, setStartDate] = useState(model?.startDate? Date.parse(moment(model?.startDate, 'DD-MM-yyyy').toISOString()) : new Date())
-  const [endDate, setEndDate] = useState(model?.endDate? Date.parse(moment(model?.endDate, 'DD-MM-yyyy').toISOString()) : new Date())
 
   return (
     <Formik
     initialValues = {{
       title: model?.title ? model?.title : '',
-      startDate: moment(startDate).format('DD-MM-yyyy'),
-      endDate: moment(endDate).format('DD-MM-yyyy'),
+      startDate: model?.startDate ? model?.startDate : '',
+      endDate: model?.endDate ? model?.endDate : '',
       clientId: model?.clientId ? model?.clientId : '',
       terms: model?.terms ? model?.terms : '',
       status: model?.status ? model?.status : '',
@@ -29,6 +27,7 @@ const FormEditContract = ({ command, clients, model, submitHandler }) => {
     })}
     onSubmit = {submitHandler}
     >
+      {({ values, setFieldValue }) => (
       <Form>
         <div className="w-full max-w-xl mx-auto text-sm">
           <div className="text-center text-red-500 my-4 border rounded border-orange-400 bg-yellow-200 p-4">
@@ -82,12 +81,11 @@ const FormEditContract = ({ command, clients, model, submitHandler }) => {
             </div>
             <div className="w-2/3">
               <DatePicker
-                selected={startDate}
+                selected={Date.parse(moment(values.startDate, 'DD-MM-yyyy').toISOString())}
                 name="startDate"
                 className={inputClass}
                 dateFormat="dd-MM-yyyy"
-                onChange={startDate => setStartDate(startDate)}
-//                onChange={startDate => {model.startDate, startDate}}
+                onChange={date => setFieldValue('startDate', moment(date).format('DD-MM-yyyy'))}
               />
               <span><ErrorMessage name="startDate" /></span>
             </div>
@@ -98,11 +96,11 @@ const FormEditContract = ({ command, clients, model, submitHandler }) => {
             </div>
             <div className="w-2/3">
             < DatePicker
-                selected={endDate}
+                selected={Date.parse(moment(values.endDate, 'DD-MM-yyyy').toISOString())}
                 name="endDate"
                 className={inputClass}
                 dateFormat="dd-MM-yyyy"
-                onChange={endDate => setEndDate(endDate)}
+                onChange={date => setFieldValue('endDate', moment(date).format('DD-MM-yyyy'))}
               />
               <span><ErrorMessage name="endDate" /></span>
             </div>
@@ -152,6 +150,7 @@ const FormEditContract = ({ command, clients, model, submitHandler }) => {
         </div>
         {command ? <div className="h-10"></div> : <div className="h-64"></div>}
       </Form>
+      )}
     </Formik>
   )
 }
