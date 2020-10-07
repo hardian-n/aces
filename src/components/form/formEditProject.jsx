@@ -13,6 +13,8 @@ const FormEditProject = ({ command, clients, contracts, model, submitHandler }) 
     <Formik
     initialValues = {{
       title: model?.title ? model?.title : '',
+      clientId: model?.clientId ? model?.clientId : '',
+      contractId: model?.contractId ? model?.contractId : '',
       description: model?.description ? model?.description : '',
       startDate: model?.startDate ? model?.startDate : '',
       endDate: model?.endDate ? model?.endDate : '',
@@ -41,11 +43,11 @@ const FormEditProject = ({ command, clients, contracts, model, submitHandler }) 
             </div>
             <div className="flex items-center mb-3">
               <div className="w-1/3">
-                <label className={labelClass} htmlFor="clients">Clients</label>
+                <label className={labelClass} htmlFor="clientId">Clients</label>
               </div>
               <div className="w-2/3">
-                <Field className={inputClass} name="clients" as="select">
-                  <option value=''>Choose Client</option>
+                <Field className={inputClass} name="clientId" as="select">
+                  <option value={model?.clientId ? model?.clientId : ''}>Choose Client</option>
                   {clients.map((client) => (
                     <option value={client._id} key={client._id}>{client.name}</option>
                   ))}
@@ -54,11 +56,11 @@ const FormEditProject = ({ command, clients, contracts, model, submitHandler }) 
             </div>
             <div className="flex items-center mb-3">
               <div className="w-1/3">
-                <label className={labelClass} htmlFor="contracts">Contracts</label>
+                <label className={labelClass} htmlFor="contractId">Contracts</label>
               </div>
               <div className="w-2/3">
-                <Field className={inputClass} name="contracts" as="select">
-                  <option value=''>Choose Contracts</option>
+                <Field className={inputClass} name="contractId" as="select">
+                  <option value={model?.contractId ? model?.contractId : ''}>Choose Contracts</option>
                   {contracts.map((contract) => (
                     <option value={contract._id} key={contract._id}>{contract.title}</option>
                   ))}

@@ -23,8 +23,7 @@ const Project = ({ user, id }) => {
   const url5 = process.env.NEXT_PUBLIC_BASE_API_URL + `/licenses/${user.license}/contracts`
   const { data: contracts, mutate: mutateContracts } = useSWR([url5, user.token], apiFetchGet)
 
-  if (!project) return LoadingOrNotFound("Loading...")
-  if (!project.title) return LoadingOrNotFound("Tidak ketemu")
+  if (!project || !clients || !contracts) return LoadingOrNotFound("Loading...")
 
   const submitHandler = async (values, {setSubmitting}) => {
     console.log(JSON.stringify(values, null, 2))
@@ -60,7 +59,11 @@ const Project = ({ user, id }) => {
           </tbody>
         </table>
         <br/>
-        <FormEditProject model={project} clients={clients} contracts={contracts} submitHandler={submitHandler} />
+        <FormEditProject 
+          clients={clients} 
+          contracts={contracts}
+          model={project}
+          submitHandler={submitHandler} /> 
       </div>
 
       <style jsx>{`
@@ -68,6 +71,7 @@ const Project = ({ user, id }) => {
           border-collapse: collapse;
         }
         h3 {
+          font-weight: 500;
           margin-bottom: .25rem;
         }
         td {

@@ -20,14 +20,14 @@ const Modules = ({ user, projectId, subtitle }) => {
 
   return (
     <div>
-      <DashboardHeader client={false} subtitle={subtitle} />
+      <DashboardHeader user={user} projectId={projectId} subtitle={subtitle} />
       <div className="container max-w-5xl mx-auto px-6 py-6">
         
         {projectModules.map((module) => (
           <table key={module.ref} className="mb-8"><tbody>
             <tr><td colSpan="2">
               <h3 className="font-normal">
-                <Link href={`/[license]/[projectId]/modules/[ref]`} as={`/${user.license}/${projectId}/modules/${module.ref}`}>
+                <Link href={`/[license]/[projectId]/modules/[refModule]`} as={`/${user.license}/${projectId}/modules/${module.ref}`}>
                   <a className="abc">{module.name}</a>
                 </Link>
               </h3>
