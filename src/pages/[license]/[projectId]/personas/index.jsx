@@ -4,7 +4,7 @@ import Personas from "components/Personas";
 import { useRouter } from 'next/router';
 import Unauthorized from 'components/unauthorized'
 
-const ProjectPage = () => {
+const ProjectPersonas = () => {
   const { user } = useUser({ redirectTo: '/login' })
   const router = useRouter()
   const { projectId } = router.query
@@ -19,4 +19,4 @@ const ProjectPage = () => {
   )
 }
 
-export default ProjectPage
+export default ProjectPersonas
