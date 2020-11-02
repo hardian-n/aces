@@ -1,12 +1,10 @@
 import Link from 'next/link'
 import useSWR from 'swr'
-import { useState } from 'react'
 import apiFetchGet from 'lib/apiFetchGet'
 import fetchJson from 'lib/fetchJson'
 import DashboardHeader from 'components/heading/personas'
 import FormEditPersona from 'components/form/formEditPersona'
-import FormEditModulePersona from 'components/form/formEditModulePersona'
-import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 export const Loading = (msg = "Loading...") => {
   return (
@@ -22,11 +20,8 @@ const Personas = ({ user, projectId, subtitle }) => {
   const url2 = process.env.NEXT_PUBLIC_BASE_API_URL + `/projects/${projectId}/modules`
   const { data: projectModules, mutate: mutateProjectModules } = useSWR([url2, user.token], apiFetchGet)
   const checkClass = "text-gray-700 text-left pr-2"
-
   const [checked, setChecked] = React.useState([]);
-  const [myChecked, setMyChecked] = useState([]);
-  const [kirim, setkirim] = useState([]);
-  
+
   const submitHandler = async (values, {setSubmitting, resetForm}) => {
     console.log(JSON.stringify(values, null, 2))
     console.log(values)
@@ -84,42 +79,6 @@ const Personas = ({ user, projectId, subtitle }) => {
     setChecked(newChecked);
   */
   }
-  const showDiv = () => {
-    return myChecked.length === myOptions.length;
-  };
-
-  const toggle = e => {
-    e.persist();
-    if (e.target.checked) {
-      setMyChecked(oldArray => [...oldArray, e.target.name]);
-    } else {
-      setMyChecked(oldArray => oldArray.filter(item => item !== e.target.name));
-    }
-    alert(myChecked)
-  };
-
-  const submitSetTest = async (values, category) => {
-
-    alert(JSON.stringify(values, null, 2));
-    alert(JSON.stringify(kirim, null, 2));
-/*
-    const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/projects/${projectId}/personas/${values.username}/set-tests`
-    const json = await fetchJson(url, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        Authorization: 'Bearer ' + user.token,
-      },
-      body: JSON.stringify(values.modulname),
-    })
-    console.log(JSON.stringify(values, null, 2))
-    console.log(values)
-    mutateProjectPersona()
-    trigger()
-    console.log(json)
-    resetForm({values:''})
-*/
-  }
 
   if (!projectPersonas || !projectModules) return Loading()
 
@@ -130,7 +89,7 @@ const Personas = ({ user, projectId, subtitle }) => {
       <div className="container max-w-5xl mx-auto px-6 py-6">
         <Formik
           initialValues = {{
-            categoryIds: []
+
           }}
           enableReinitialize = {true}
         >
@@ -199,85 +158,8 @@ const Personas = ({ user, projectId, subtitle }) => {
                 </tr>
               ))}
             </tbody></table>
-            <br /><hr /><br />
-            <table>
-              <tbody>
-                <tr>
-                  <td className="text-center align-middle">Nama</td>
-                  {projectModules.map((module) => (
-                    module.method == "selftest" && module.enabled == true &&
-                    <td key={module.ref} className="text-center px-5 bg-gray-100">{module.name}</td>
-                  ))}
-                  <td className="col-span-1"></td>
-                  {projectModules.map((module) => (
-                    module.method == "simulation" && module.enabled == true &&
-                    <td key={module.ref} className="text-center px-5 bg-blue-100">{module.name}</td>
-                  ))}
-                </tr>
-                {projectPersonas.map((persona) => (
-                  <tr key={persona._id}>
-                    <td className="px-5">
-                      <h3 className="font-normal">
-                        <Link href={`/[license]/[projectId]/personas/[username]`} as={`/${user.license}/${projectId}/personas/${persona.username}`}>
-                          <a className="abc">{persona.fullname}</a>
-                        </Link>
-                      </h3>
-                    </td>
-                    {projectModules.map((module) => (
-                      module.method == "selftest" && module.enabled == true &&
-                      <td className="text-center px-5 bg-gray-100" key={module.ref}>
-                        <input type="checkbox" name={module.name} onChange={toggle} />
-                      </td>
-                    ))}
-                    <td className="col-span-1"></td>
-                    {projectModules.map((module) => (
-                      module.method == "simulation" && module.enabled == true &&
-                      <td key={module.ref} className="text-center px-5 bg-blue-100">{module.name}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <br /><hr /><br />
-
           </Form>
         </Formik>
-
-        <table><tbody>
-          <tr>
-            <td className="text-center align-middle">Nama</td>
-            <td>
-              <table><tbody>
-                <tr>
-                  {projectModules.map((module) => (
-                    module.method == "selftest" && module.enabled == true &&
-                    <td key={module.ref} className="text-center px-5 bg-gray-100 w-32">{module.name}</td>
-                  ))}
-                  <td className="col-span-1"></td>
-                  {projectModules.map((module) => (
-                    module.method == "simulation" && module.enabled == true &&
-                    <td key={module.ref} className="text-center px-5 bg-blue-100 w-32">{module.name}</td>
-                  ))}
-                </tr>
-              </tbody></table>
-            </td>
-          </tr>
-          {projectPersonas.map((persona) => (
-            <tr key={persona._id}>
-              <td className="px-5">
-                <h3 className="font-normal">
-                  <Link href={`/[license]/[projectId]/personas/[username]`} as={`/${user.license}/${projectId}/personas/${persona.username}`}>
-                    <a className="abc">{persona.fullname}</a>
-                  </Link>
-                </h3>
-              </td>
-              <td>
-                <FormEditModulePersona persona={persona.tests} projectModules={projectModules} submitSetTest={submitSetTest} username={persona.username} />
-              </td>
-            </tr>
-          ))}
-        </tbody></table>
-        <br /><hr /><br />
 
         {projectPersonas.map((persona) => (
           <table key={persona._id} className="mb-8"><tbody>

@@ -94,11 +94,11 @@ const FormEditProject = ({ command, clients, contracts, model, submitHandler }) 
             </div>
             <div className="w-2/3">
               <DatePicker
-                selected={Date.parse(moment(values.startDate, 'DD-MM-yyyy').toISOString())}
+                selected={Date.parse(moment(values.startDate, 'yyyy-MM-DD').toISOString())}
                 name="startDate"
                 className={inputClass}
                 dateFormat="yyyy-MM-dd"
-                onChange={date => setFieldValue('startDate', moment(date).format('DD-MM-yyyy'))}
+                onChange={date => setFieldValue('startDate', moment(date).format('yyyy-MM-DD'))}
               />
               <span><ErrorMessage name="startDate" /></span>
             </div>
@@ -109,11 +109,11 @@ const FormEditProject = ({ command, clients, contracts, model, submitHandler }) 
             </div>
             <div className="w-2/3">
               < DatePicker
-                selected={Date.parse(moment(values.endDate, 'DD-MM-yyyy').toISOString())}
+                selected={Date.parse(moment(values.endDate, 'yyyy-MM-DD').toISOString())}
                 name="endDate"
                 className={inputClass}
                 dateFormat="yyyy-MM-dd"
-                onChange={date => setFieldValue('endDate', moment(date).format('DD-MM-yyyy'))}
+                onChange={date => setFieldValue('endDate', moment(date).format('yyyy-MM-DD'))}
               />
               <span><ErrorMessage name="endDate" /></span>
             </div>
