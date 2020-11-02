@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import useSWR from 'swr'
+import useSWR, {trigger} from 'swr'
 import { useState } from 'react'
 import apiFetchGet from 'lib/apiFetchGet'
 import fetchJson from 'lib/fetchJson'
@@ -45,64 +45,15 @@ const Personas = ({ user, projectId, subtitle }) => {
     resetForm({values:''})
   }
 
-  const handleToggle = async (value) => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-    alert(value)
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    setChecked(newChecked);
-    alert(newChecked);
-/*    if (currentIndex === -1) {
-      newChecked.push(value);
-      const url1 = process.env.NEXT_PUBLIC_BASE_API_URL + `/projects/${projectId}/modules/${value}/enable`
-      const json = await fetchJson(url1, {
-        method: 'PUT',
-        headers: {
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + user.token,
-        },
-      })
-      mutateProjectModules()
-      trigger()
-    } else {
-      newChecked.splice(currentIndex, 1);
-      const url1 = process.env.NEXT_PUBLIC_BASE_API_URL + `/projects/${projectId}/modules/${value}/disable`
-      const json = await fetchJson(url1, {
-        method: 'PUT',
-        headers: {
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + user.token,
-        },
-      })
-      mutateProjectModules()
-      trigger()
-   }
-    setChecked(newChecked);
-  */
-  }
-  const showDiv = () => {
-    return myChecked.length === myOptions.length;
-  };
-
-  const toggle = e => {
-    e.persist();
-    if (e.target.checked) {
-      setMyChecked(oldArray => [...oldArray, e.target.name]);
-    } else {
-      setMyChecked(oldArray => oldArray.filter(item => item !== e.target.name));
-    }
-    alert(myChecked)
-  };
-
   const submitSetTest = async (values, category) => {
 
-    alert(JSON.stringify(values, null, 2));
-    alert(JSON.stringify(kirim, null, 2));
-/*
+    if (values.modulname.includes(category))
+    {
+      const idx = values.modulname.indexOf(category);
+      values.modulname.splice(idx, 1);
+    } else {
+      values.modulname.push(category);
+    }
     const url = process.env.NEXT_PUBLIC_BASE_API_URL + `/projects/${projectId}/personas/${values.username}/set-tests`
     const json = await fetchJson(url, {
       method: 'PUT',
@@ -112,10 +63,10 @@ const Personas = ({ user, projectId, subtitle }) => {
       },
       body: JSON.stringify(values.modulname),
     })
-    console.log(JSON.stringify(values, null, 2))
-    console.log(values)
-    mutateProjectPersona()
+    mutateProjectPersonas()
     trigger()
+    console.log(json)
+/*
     console.log(json)
     resetForm({values:''})
 */
@@ -128,120 +79,6 @@ const Personas = ({ user, projectId, subtitle }) => {
       <DashboardHeader client={false} subtitle={subtitle} />
       <FormEditPersona  command={'add'} submitHandler={submitHandler} />
       <div className="container max-w-5xl mx-auto px-6 py-6">
-        <Formik
-          initialValues = {{
-            categoryIds: []
-          }}
-          enableReinitialize = {true}
-        >
-          <Form>
-            <table><tbody>
-              <tr>
-                <td className="text-center align-middle">Nama</td>
-                {projectModules.map((module) => (
-                  module.method == "selftest" && module.enabled == true &&
-                  <td key={module.ref} className="text-center px-5 bg-gray-100">{module.name}</td>
-                ))}
-                <td className="col-span-1"></td>
-                {projectModules.map((module) => (
-                  module.method == "simulation" && module.enabled == true &&
-                  <td key={module.ref} className="text-center px-5 bg-blue-100">{module.name}</td>
-                ))}
-              </tr>
-              {projectPersonas.map((persona) => (
-                <tr key={persona._id}>
-                  <td className="px-5">
-                    <h3 className="font-normal">
-                      <Link href={`/[license]/[projectId]/personas/[username]`} as={`/${user.license}/${projectId}/personas/${persona.username}`}>
-                        <a className="abc">{persona.fullname}</a>
-                      </Link>
-                    </h3>
-                  </td>
-                  {projectModules.map((module) => (
-                    module.method === "selftest" && module.enabled === true &&
-                    <td className="text-center px-5 bg-gray-100" key={module.ref}>
-                      {persona.tests.map((test) => (
-                        test === module.slug &&
-                        <Field 
-                          key={module.slug}
-                          className={checkClass}
-                          component="input" 
-                          type="checkbox"
-                          name="opsi"
-                          onClick={() => handleToggle(module.ref)}
-                          checked={
-                            module.enabled === true ? true : false
-                          }    
-                        />
-                      ))}
-                    </td>
-                  ))}
-                  <td className="col-span-1"></td>
-                  {projectModules.map((module) => (
-                    module.method === "simulation" && module.enabled === true &&
-                    <td className="text-center px-5 bg-blue-100" key={module.ref}>
-                      {persona.tests.map((test) => (
-                        test === module.slug &&
-                        <Field
-                          key={module.slug}
-                          className={checkClass}
-                          component="input" 
-                          type="checkbox"
-                          name="opsi"
-                          onClick={() => handleToggle(module.ref)}
-                          checked={
-                            module.enabled === true ? true : false
-                          }    
-                        />
-                      ))}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody></table>
-            <br /><hr /><br />
-            <table>
-              <tbody>
-                <tr>
-                  <td className="text-center align-middle">Nama</td>
-                  {projectModules.map((module) => (
-                    module.method == "selftest" && module.enabled == true &&
-                    <td key={module.ref} className="text-center px-5 bg-gray-100">{module.name}</td>
-                  ))}
-                  <td className="col-span-1"></td>
-                  {projectModules.map((module) => (
-                    module.method == "simulation" && module.enabled == true &&
-                    <td key={module.ref} className="text-center px-5 bg-blue-100">{module.name}</td>
-                  ))}
-                </tr>
-                {projectPersonas.map((persona) => (
-                  <tr key={persona._id}>
-                    <td className="px-5">
-                      <h3 className="font-normal">
-                        <Link href={`/[license]/[projectId]/personas/[username]`} as={`/${user.license}/${projectId}/personas/${persona.username}`}>
-                          <a className="abc">{persona.fullname}</a>
-                        </Link>
-                      </h3>
-                    </td>
-                    {projectModules.map((module) => (
-                      module.method == "selftest" && module.enabled == true &&
-                      <td className="text-center px-5 bg-gray-100" key={module.ref}>
-                        <input type="checkbox" name={module.name} onChange={toggle} />
-                      </td>
-                    ))}
-                    <td className="col-span-1"></td>
-                    {projectModules.map((module) => (
-                      module.method == "simulation" && module.enabled == true &&
-                      <td key={module.ref} className="text-center px-5 bg-blue-100">{module.name}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <br /><hr /><br />
-
-          </Form>
-        </Formik>
 
         <table><tbody>
           <tr>

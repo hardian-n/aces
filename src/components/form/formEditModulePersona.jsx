@@ -24,13 +24,6 @@ export const FormEditModulePersona = ({ persona, projectModules, submitSetTest, 
                       value={module.name}
                       checked={values.modulname.includes(category.slug)}
                       onChange={e => {
-                        if (e.target.checked)
-                        {
-                          arrayHelpers.push(category.slug);
-                        } else {
-                          const idx = values.modulname.indexOf(category.slug);
-                          arrayHelpers.remove(idx);
-                        }
                         submitSetTest(values, category.slug);
                       }}
                     />{" "}
