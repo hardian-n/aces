@@ -9,13 +9,33 @@ export const FormEditModulePersona = ({ persona, projectModules, submitSetTest, 
     <Formik
     initialValues = {{ modulname: persona, username: username }}
     enableReinitialize = {true}
-    render={({ values }) => (
+    >
+    {({ values }) => (
       <table><tbody><tr>
         <FieldArray
           name="modulname"
-          render={arrayHelpers => (
+        >
+          {arrayHelpers => (
             <>
               {projectModules.map(category => (
+                category.method == "selftest" && category.enabled == true &&
+                <td key={category.ref} className="text-center px-5 bg-gray-100 w-32">
+                  <label>
+                    <input
+                      name="modulname"
+                      type="checkbox"
+                      value={module.name}
+                      checked={values.modulname.includes(category.slug)}
+                      onChange={e => {
+                        submitSetTest(values, category.slug);
+                      }}
+                    />{" "}
+                  </label>
+                </td>
+              ))}
+              <td className="col-span-1"></td>
+              {projectModules.map(category => (
+                category.method == "simulation" && category.enabled == true &&
                 <td key={category.ref} className="text-center px-5 bg-gray-100 w-32">
                   <label>
                     <input
@@ -32,13 +52,10 @@ export const FormEditModulePersona = ({ persona, projectModules, submitSetTest, 
               ))}
             </>
           )}
-        />
-        <td>
-          <pre>{JSON.stringify(values, null, 2)}</pre>
-        </td>
+        </FieldArray>
       </tr></tbody></table>
     )}
-    />
+    </Formik>
   </>
 )
 
